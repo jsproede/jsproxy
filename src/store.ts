@@ -5,11 +5,18 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    urls: [],
+    requests: [],
+    requestIndex: -1,
   },
   mutations: {
-    addUrl(state: any, payload): void {
-      state.urls.push(payload.url);
+    selectRequest(state: any, { id }): void {
+      state.requestIndex = id;
+    },
+    addRequest(state: any, payload): void {
+      state.requests.push(payload.req);
+    },
+    clearRequests(state: any): void {
+      state.requests = [];
     },
   },
   actions: {},

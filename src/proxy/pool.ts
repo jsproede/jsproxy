@@ -13,8 +13,8 @@ const ProxyPool = class {
     });
   }
 
-  public acquireProxy(): Proxy {
-    let port = PROXY_STARTING_PORT;
+  public acquireProxy(port?: number): Proxy {
+    port = port || PROXY_STARTING_PORT;
     while (this.isPortInUse(port)) {
       port = port + 1;
     }

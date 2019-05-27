@@ -7,6 +7,7 @@ export default class Proxy {
   private readonly port: number;
   private proxyRunning: boolean = false;
   private proxyInstance: HttpProxy;
+  private httpInstance: any;
 
   private requestedUrls: string[] = [];
 
@@ -18,14 +19,16 @@ export default class Proxy {
 
     this.proxyInstance.listen(8000);
 
-    Http.createServer((req, res) => {
+    this.httpInstance = Http.createServer((req, res) => {
       console.log('Requested', req.url);
       this.requestedUrls.push(String(req.url));
 
-      Store.commit('addUrl', { url: req.url });
+      Store.commit('addRequest', { req: { ...req, date: new Date() } });
 
       this.proxyInstance.web(req, res, { target: req.url });
-    }).listen(port);
+    });
+
+    this.httpInstance.listen(port);
 
     this.proxyRunning = true;
   }
@@ -41,7 +44,10 @@ export default class Proxy {
   }
 
   public close(): void {
-    this.proxyRunning && this.proxyInstance.close();
+    if (this.proxyRunning) {
+      this.proxyInstance.close();
+      this.httpInstance.close();
+    }
     this.proxyRunning = false;
   }
 
@@ -51,5 +57,9 @@ export default class Proxy {
 
   public getUrls(): string[] {
     return this.requestedUrls;
+  }
+
+  public isRunning(): boolean {
+    return this.proxyRunning;
   }
 }
