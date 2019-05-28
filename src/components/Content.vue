@@ -42,6 +42,9 @@ import ProxyPool from '@/proxy/pool';
   computed: mapState(['requests', 'requestIndex']),
 })
 export default class Content extends Vue {
+  private requests!: [];
+  private requestIndex!: number;
+
   private usePort: number = 3748;
   private proxy: Proxy | null = null;
 

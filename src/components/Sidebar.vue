@@ -17,6 +17,7 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import { mapState, mapMutations } from 'vuex';
+import { State, Mutation } from 'vuex-class';
 
 @Component({
   name: 'Sidebar',
@@ -24,7 +25,9 @@ import { mapState, mapMutations } from 'vuex';
   methods: mapMutations(['clearRequests', 'selectRequest']),
 })
 export default class Sidebar extends Vue {
-  clearHistory(): void {
+  public clearRequests!: any;
+
+  private clearHistory(): void {
     this.clearRequests();
   }
 }
