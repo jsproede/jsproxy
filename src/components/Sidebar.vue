@@ -1,31 +1,36 @@
 <template>
   <div class="wrapper">
-    <button @click="clearHistory">Clear history</button>
-    <div>Requests</div>
-    <ul v-if="requests">
-      <li
-        v-for="(request, index) in requests"
-        :key="index"
-        :class="{active: index === requestIndex}"
-      >
-        <a @click="selectRequest({ id: index })">{{request.url}}</a>
-      </li>
-    </ul>
+    <div class="clear-history-wrapper">
+      <a @click="clearHistory">Clear all</a>
+    </div>
+    <request-history :requests="requests" @request-selected="select"></request-history>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import { mapState, mapMutations } from 'vuex';
-import { State, Mutation } from 'vuex-class';
+
+import RequestHistory from './RequestHistory.vue';
 
 @Component({
   name: 'Sidebar',
   computed: mapState(['requests', 'requestIndex']),
   methods: mapMutations(['clearRequests', 'selectRequest']),
+  components: {
+    RequestHistory,
+  },
 })
 export default class Sidebar extends Vue {
   public clearRequests!: any;
+
+  protected selectRequest!: any;
+
+  protected select(index: number) {
+    this.selectRequest({
+      id: index,
+    });
+  }
 
   private clearHistory(): void {
     this.clearRequests();
@@ -35,14 +40,20 @@ export default class Sidebar extends Vue {
 
 <style lang="scss" scoped>
 div.wrapper {
-  width: 300px;
-  padding: 10px;
-
   height: 100%;
+
+  div.clear-history-wrapper {
+    padding: 10px 10px 0 0;
+    text-align: right;
+
+    a {
+      cursor: pointer;
+    }
+  }
 
   ul {
     list-style-type: none;
-    padding: 0 0 0 5px;
+    padding: 0;
 
     li {
       display: inline-block;

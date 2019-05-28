@@ -1,0 +1,12 @@
+button {
+  -webkit-appearance: none;
+  background: white;
+  border: 1px solid #2b2c28;
+  border-radius: 4px;
+  font-size: 12px;
+  outline: 0;
+
+  &:active {
+    background: rgb(233, 233, 233);
+  }
+}

@@ -1,0 +1,19 @@
+div.flex {
+  display: flex;
+}
+
+pre.json {
+  user-select: text;
+  background: #2b2c28;
+  padding: 5px;
+  border-radius: 5px;
+  overflow-x: auto;
+
+  &::selection {
+    background: #131515;
+  }
+}
+
+span.bold {
+  font-weight: bold;
+}

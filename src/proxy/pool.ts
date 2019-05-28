@@ -25,6 +25,14 @@ const ProxyPool = class {
     return proxy;
   }
 
+  public getProxy(index: number): Proxy {
+    if (this.pool.length > index - 1) {
+      return this.pool[index];
+    }
+
+    return null;
+  }
+
   public closeAllProxies(): void {
     console.log(`Closing ${this.pool.length} proxies`);
     this.pool.forEach(proxy => {

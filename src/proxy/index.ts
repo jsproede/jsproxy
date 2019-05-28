@@ -9,8 +9,6 @@ export default class Proxy {
   private proxyInstance: HttpProxy;
   private httpInstance: any;
 
-  private requestedUrls: string[] = [];
-
   constructor(port: number) {
     this.port = port;
     this.proxyInstance = HttpProxy.createProxyServer({
@@ -19,17 +17,30 @@ export default class Proxy {
 
     this.proxyInstance.listen(8000);
 
-    this.httpInstance = Http.createServer((req, res) => {
+    this.httpInstance = Http.createServer(async (req, res) => {
       console.log('Requested', req.url);
-      this.requestedUrls.push(String(req.url));
+
+      const body = await new Promise((resolve, reject) => {
+        let body = '';
+        req.on('data', chunk => {
+          body += chunk.toString();
+        });
+        req.on('end', () => {
+          resolve(body);
+          res.end('ok');
+        });
+      });
+
+      (req as any).body = body;
 
       Store.commit('addRequest', { req: { ...req, date: new Date() } });
 
-      this.proxyInstance.web(req, res, { target: req.url });
+      this.proxyInstance.web(req, res, {
+        target: req.url,
+      });
     });
 
     this.httpInstance.listen(port);
-
     this.proxyRunning = true;
   }
 
@@ -53,10 +64,6 @@ export default class Proxy {
 
   public getPort(): number {
     return this.port;
-  }
-
-  public getUrls(): string[] {
-    return this.requestedUrls;
   }
 
   public isRunning(): boolean {

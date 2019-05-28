@@ -14,13 +14,17 @@ body {
 }
 
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+    Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  /* -webkit-font-smoothing: antialiased; */
   -moz-osx-font-smoothing: grayscale;
   user-select: none;
-  color: #2c3e50;
+  font-size: 12px;
 
   max-width: 100vw;
   max-height: 100vh;
+
+  background-color: #131515;
+  color: #969696;
 }
 </style>

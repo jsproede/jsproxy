@@ -1,31 +1,28 @@
 <template>
   <div class="wrapper">
-    <div class="proxy-state" :class="{ on: proxyRunning }"></div>
     <div>
-      <label>
+      <!-- <label>
         <span>Port:</span>
         <input type="number" v-model="usePort">
       </label>
 
       <button @click="toggleProxy" :disabled="proxyRunning">Start proxy</button>
-      <button @click="closeAllProxies">Close all proxies</button>
+      <button @click="closeAllProxies">Close all proxies</button>-->
 
       <div v-if="requestIndex !== -1">
-        {{selectedRequest.date}}
-        <hr>
-        <div class="method">
-          <span>Method</span>
-          <pre>{{selectedRequest.method}}</pre>
-        </div>
-        <hr>
+        <span>
+          {{selectedRequest.method}}
+          <span class="bold">{{selectedRequest.url}}</span>
+          | {{selectedRequest.date | date}}
+        </span>
+        <p></p>
         <div class="headers">
-          <span>Headers</span>
-          <pre>{{JSON.stringify(selectedRequest.headers, undefined, 2)}}</pre>
+          <span>HTTP Headers</span>
+          <pre class="json">{{JSON.stringify(selectedRequest.headers, undefined, 2)}}</pre>
         </div>
-        <hr>
-        <div class="body">
-          <span>Body</span>
-          <pre>{{JSON.stringify(selectedRequest.body, undefined, 2)}}</pre>
+        <div v-if="selectedRequest.method !== 'GET'" class="body">
+          <span>HTTP Body</span>
+          <pre class="json">{{selectedRequest.body}}</pre>
         </div>
       </div>
     </div>
@@ -35,11 +32,18 @@
 <script lang="ts">
 import { Component, Vue, Watch } from 'vue-property-decorator';
 import { mapState } from 'vuex';
+import moment from 'moment';
+
 import Proxy from '@/proxy';
 import ProxyPool from '@/proxy/pool';
 
 @Component({
   computed: mapState(['requests', 'requestIndex']),
+  filters: {
+    date(value: any) {
+      return moment(value).format('DD.MM.YYYY - HH:mm:ss');
+    },
+  },
 })
 export default class Content extends Vue {
   private requests!: [];
@@ -63,7 +67,7 @@ export default class Content extends Vue {
 
   get selectedRequest(): any {
     if (this.requestIndex !== -1) {
-      // TODO: Why is this marked as an error
+      console.log(this.requests[this.requestIndex]);
       return this.requests[this.requestIndex];
     }
 
@@ -75,24 +79,9 @@ export default class Content extends Vue {
 <style lang="scss" scoped>
 div.wrapper {
   position: relative;
-  border-left: 1px solid lightgray;
-  box-shadow: -5px 0 25px -15px rgba(1, 1, 1, 0.8);
+  box-shadow: -2px 0 0 0px rgba(252, 252, 252, 0.2);
   padding: 10px;
 
   height: 100%;
-
-  .proxy-state {
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background: red;
-
-    &.on {
-      background: green;
-    }
-  }
 }
 </style>
