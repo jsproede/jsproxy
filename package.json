@@ -1,7 +1,11 @@
 {
   "name": "jsproxy",
   "version": "0.1.0",
-  "private": true,
+  "author": {
+    "name": "Jens Sproede",
+    "email": "jens@jenssproede.de"
+  },
+  "private": false,
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
