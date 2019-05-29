@@ -27,7 +27,7 @@ export default class Proxy {
         });
         req.on('end', () => {
           resolve(body);
-          res.end('ok');
+          // res.end('ok');
         });
       });
 

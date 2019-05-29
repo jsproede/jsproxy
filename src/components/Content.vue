@@ -79,7 +79,6 @@ export default class Content extends Vue {
 <style lang="scss" scoped>
 div.wrapper {
   position: relative;
-  box-shadow: -2px 0 0 0px rgba(252, 252, 252, 0.2);
   padding: 10px;
 
   height: 100%;

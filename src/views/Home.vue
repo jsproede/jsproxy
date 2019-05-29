@@ -46,7 +46,7 @@ export default class Home extends Vue {
     const containerOffsetLeft = wrapper.offsetLeft;
     const pointerRelativeXpos = e.clientX - containerOffsetLeft;
 
-    sidebar.style.width = `${pointerRelativeXpos + 10}px`;
+    sidebar.style.width = `${pointerRelativeXpos + 0}px`;
     sidebar.style.flexGrow = 0;
   }
 
@@ -67,11 +67,15 @@ div.home {
     div.box {
       box-sizing: border-box;
       flex: 1 1 auto;
-      overflow: auto;
+      overflow-y: auto;
 
       &.sidebar {
         min-width: 100px;
         position: relative;
+      }
+
+      &.content {
+        border-left: 2px solid rgba(252, 252, 252, 0.2);
       }
     }
 
