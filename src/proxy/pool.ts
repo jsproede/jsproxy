@@ -25,7 +25,7 @@ const ProxyPool = class {
     return proxy;
   }
 
-  public getProxy(index: number): Proxy {
+  public getProxy(index: number): Proxy | null {
     if (this.pool.length > index - 1) {
       return this.pool[index];
     }
