@@ -8,7 +8,7 @@
         @click="select(index)"
       >
         <a>
-          <span class="http-method">{{request.method}}</span>
+          <request-method :method="request.method" />
           <span class="http-url" :title="request.url">{{request.url}}</span>
         </a>
       </li>
@@ -20,7 +20,9 @@
 import { Component, Vue, Prop } from 'vue-property-decorator';
 import { mapMutations } from 'vuex';
 
-@Component({})
+import RequestMethod from '@/components/RequestMethod.vue';
+
+@Component({ components: { RequestMethod } })
 export default class RequestHistory extends Vue {
   @Prop() requests!: string[];
 
@@ -54,18 +56,6 @@ div {
           span.http-url {
             color: #ce8964;
           }
-        }
-      }
-
-      a {
-        .http-method {
-          padding: 2px 4px;
-          font-size: 10px;
-          background-color: #476c9b;
-          color: #fff;
-          border-radius: 2px;
-
-          margin-right: 8px;
         }
       }
     }

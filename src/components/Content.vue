@@ -11,7 +11,7 @@
 
       <div v-if="requestIndex !== -1">
         <span>
-          {{selectedRequest.method}}
+          <request-method :method="selectedRequest.method" />
           <span class="bold">{{selectedRequest.url}}</span>
           | {{selectedRequest.date | date}}
         </span>
@@ -37,7 +37,10 @@ import moment from 'moment';
 import Proxy from '@/proxy';
 import ProxyPool from '@/proxy/pool';
 
+import RequestMethod from '@/components/RequestMethod.vue';
+
 @Component({
+  components: { RequestMethod },
   computed: mapState(['requests', 'requestIndex']),
   filters: {
     date(value: any) {
