@@ -1,5 +1,13 @@
 <template>
   <div class="wrapper">
+    <ul>
+      <li>
+        <router-link to="/">Requests</router-link>
+      </li>
+      <li>Settings</li>
+      <li>About</li>
+    </ul>
+
     <div class="proxy-state" :class="{ on: proxyRunning }"></div>
   </div>
 </template>
@@ -25,6 +33,31 @@ div.wrapper {
   height: 40px;
   margin-bottom: 2px;
   box-shadow: 0px 0px 0px 2px rgba(233, 233, 233, 0.2);
+
+  ul {
+    margin: 0;
+    padding: 0 50px 0 10px;
+
+    height: 100%;
+
+    list-style-type: none;
+
+    display: flex;
+    align-items: center;
+
+    li {
+      font-size: 14px;
+
+      &:not(:last-child) {
+        margin-right: 20px;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+    }
+  }
 
   .proxy-state {
     position: absolute;
